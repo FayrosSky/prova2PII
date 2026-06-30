@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OficinaOS — Sistema de Gestão</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────── -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🔧</div>
+    Oficina<span>OS</span>
+  </div>
+  <div class="header-actions">
+    <button class="theme-toggle" id="btn-tema">☀️ Modo Claro</button>
+  </div>
+</header>
+
+<!-- ── Abas ─────────────────────────────────────────────────────── -->
+<nav>
+  <button class="tab-btn active" data-tab="tab-dashboard">📊 Dashboard</button>
+  <button class="tab-btn" data-tab="tab-veiculos">🚗 Veículos</button>
+  <button class="tab-btn" data-tab="tab-ordens">🔧 Ordens de Serviço</button>
+</nav>
+
+<!-- ── Conteúdo ─────────────────────────────────────────────────── -->
+<main>
+
+  <!-- ════════ DASHBOARD ════════ -->
+  <div id="tab-dashboard" class="tab-content active">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Veículos cadastrados</span>
+        <span class="stat-value" id="stat-veiculos">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">OS Abertas</span>
+        <span class="stat-value" style="color:var(--blue)" id="stat-abertas">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Em Andamento</span>
+        <span class="stat-value" style="color:var(--yellow)" id="stat-andamento">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Concluídas</span>
+        <span class="stat-value" style="color:var(--green)" id="stat-concluidas">—</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Receita (concluídas)</span>
+        <span class="stat-value" style="font-size:1.4rem" id="stat-receita">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Últimas Ordens de Serviço</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>OS</th>
+              <th>Placa</th>
+              <th>Mecânico</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="dash-recentes">
+            <tr><td colspan="4" style="text-align:center;color:var(--text-muted)">Carregando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ VEÍCULOS ════════ -->
+  <div id="tab-veiculos" class="tab-content">
+
+    <!-- Formulário cadastro -->
+    <div class="card">
+      <p class="card-title">Cadastrar Veículo</p>
+      <form id="form-veiculo" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="placa">Placa *</label>
+            <input id="placa" name="placa" type="text" placeholder="ABC1234" maxlength="7" />
+          </div>
+          <div class="form-group">
+            <label for="modelo">Modelo *</label>
+            <input id="modelo" name="modelo" type="text" placeholder="Civic, Corolla…" />
+          </div>
+          <div class="form-group">
+            <label for="marca">Marca *</label>
+            <input id="marca" name="marca" type="text" placeholder="Honda, Toyota…" />
+          </div>
+          <div class="form-group">
+            <label for="ano">Ano *</label>
+            <input id="ano" name="ano" type="number" placeholder="2020" min="1900" max="2026" />
+          </div>
+          <div class="form-group">
+            <label for="proprietario">Proprietário *</label>
+            <input id="proprietario" name="proprietario" type="text" placeholder="Nome completo" />
+          </div>
+          <div class="form-group">
+            <label for="telefone">Telefone *</label>
+            <input id="telefone" name="telefone" type="text" placeholder="(99) 99999-9999" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">✅ Cadastrar Veículo</button>
+          <button type="reset" class="btn btn-secondary">↩️ Limpar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista -->
+    <div class="card">
+      <p class="card-title">Veículos Cadastrados</p>
+      <div class="list-toolbar">
+        <label>Ordenar por:</label>
+        <select id="sort-veiculos" class="sort-select">
+          <option value="modelo">Modelo</option>
+          <option value="marca">Marca</option>
+          <option value="ano">Ano</option>
+          <option value="proprietario">Proprietário</option>
+          <option value="placa">Placa</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Placa</th>
+              <th>Modelo</th>
+              <th>Marca</th>
+              <th>Ano</th>
+              <th>Proprietário</th>
+              <th>Telefone</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-veiculos">
+            <tr><td colspan="7" style="text-align:center;color:var(--text-muted)">Carregando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ ORDENS DE SERVIÇO ════════ -->
+  <div id="tab-ordens" class="tab-content">
+
+    <!-- Formulário nova OS -->
+    <div class="card">
+      <p class="card-title">Nova Ordem de Serviço</p>
+      <form id="form-os" novalidate>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label for="veiculo_id">Veículo *</label>
+            <select id="veiculo_id" name="veiculo_id" class="sel-veiculo">
+              <option value="">— Selecione o veículo —</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="descricao">Descrição do Serviço *</label>
+            <textarea id="descricao" name="descricao" placeholder="Descreva o problema ou serviço solicitado…"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="mecanico">Mecânico Responsável *</label>
+            <input id="mecanico" name="mecanico" type="text" placeholder="Nome do mecânico" />
+          </div>
+          <div class="form-group">
+            <label for="valor">Valor Estimado (R$)</label>
+            <input id="valor" name="valor" type="number" placeholder="0.00" min="0" step="0.01" />
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">✅ Abrir OS</button>
+          <button type="reset" class="btn btn-secondary">↩️ Limpar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Lista OS -->
+    <div class="card">
+      <p class="card-title">Ordens de Serviço</p>
+      <div class="list-toolbar">
+        <label>Ordenar por:</label>
+        <select id="sort-ordens" class="sort-select">
+          <option value="data_entrada">Data de Entrada</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>OS</th>
+              <th>Veículo</th>
+              <th>Descrição</th>
+              <th>Mecânico</th>
+              <th>Status</th>
+              <th>Valor</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-ordens">
+            <tr><td colspan="7" style="text-align:center;color:var(--text-muted)">Carregando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Modal Editar Veículo ──────────────────────────────────────── -->
+<div id="modal-veiculo" class="modal-overlay">
+  <div class="modal">
+    <p class="modal-title">✏️ Editar Veículo</p>
+    <form id="form-editar-veiculo" novalidate>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Placa *</label>
+          <input name="e-placa" type="text" maxlength="7" />
+        </div>
+        <div class="form-group">
+          <label>Modelo *</label>
+          <input name="e-modelo" type="text" />
+        </div>
+        <div class="form-group">
+          <label>Marca *</label>
+          <input name="e-marca" type="text" />
+        </div>
+        <div class="form-group">
+          <label>Ano *</label>
+          <input name="e-ano" type="number" min="1900" max="2026" />
+        </div>
+        <div class="form-group full">
+          <label>Proprietário *</label>
+          <input name="e-proprietario" type="text" />
+        </div>
+        <div class="form-group full">
+          <label>Telefone *</label>
+          <input name="e-telefone" type="text" />
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">💾 Salvar</button>
+        <button type="button" id="fechar-modal-veiculo" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── Modal Editar OS ───────────────────────────────────────────── -->
+<div id="modal-os" class="modal-overlay">
+  <div class="modal">
+    <p class="modal-title">✏️ Editar Ordem de Serviço</p>
+    <form id="form-editar-os" novalidate>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>Veículo *</label>
+          <select name="e-os-veiculo" class="sel-veiculo"></select>
+        </div>
+        <div class="form-group full">
+          <label>Descrição *</label>
+          <textarea name="e-os-descricao"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Mecânico *</label>
+          <input name="e-os-mecanico" type="text" />
+        </div>
+        <div class="form-group">
+          <label>Valor (R$)</label>
+          <input name="e-os-valor" type="number" min="0" step="0.01" />
+        </div>
+        <div class="form-group full">
+          <label>Status *</label>
+          <select name="e-os-status">
+            <option value="aberta">🔵 Aberta</option>
+            <option value="em_andamento">🟡 Em andamento</option>
+            <option value="concluida">🟢 Concluída</option>
+            <option value="cancelada">🔴 Cancelada</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">💾 Salvar</button>
+        <button type="button" id="fechar-modal-os" class="btn btn-secondary">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ── Toasts ────────────────────────────────────────────────────── -->
+<div id="toast-container"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
