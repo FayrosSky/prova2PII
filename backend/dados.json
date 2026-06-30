@@ -21,9 +21,20 @@
       "criado_em": "2026-06-30T02:18:30.286Z"
     }
   ],
-  "ordens_servico": [],
+  "ordens_servico": [
+    {
+      "id": 1,
+      "veiculo_id": 1,
+      "descricao": "dafsdafdsa",
+      "mecanico": "Pagé",
+      "status": "aberta",
+      "valor": 1300,
+      "data_entrada": "2026-06-30T02:30:28.290Z",
+      "data_saida": null
+    }
+  ],
   "_nextIds": {
     "veiculos": 3,
-    "ordens_servico": 1
+    "ordens_servico": 2
   }
 }
