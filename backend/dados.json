@@ -9,30 +9,9 @@
       "proprietario": "João",
       "telefone": "11999999999",
       "criado_em": "2026-06-30T02:09:34.019Z"
-    },
-    {
-      "id": 2,
-      "placa": "ABC1111",
-      "modelo": "Strada",
-      "marca": "Fiat",
-      "ano": 2021,
-      "proprietario": "Pagé",
-      "telefone": "86988776655",
-      "criado_em": "2026-06-30T02:18:30.286Z"
     }
   ],
-  "ordens_servico": [
-    {
-      "id": 1,
-      "veiculo_id": 1,
-      "descricao": "dafsdafdsa",
-      "mecanico": "Pagé",
-      "status": "aberta",
-      "valor": 1300,
-      "data_entrada": "2026-06-30T02:30:28.290Z",
-      "data_saida": null
-    }
-  ],
+  "ordens_servico": [],
   "_nextIds": {
     "veiculos": 3,
     "ordens_servico": 2

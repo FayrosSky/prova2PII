@@ -1,7 +1,14 @@
 // ════════════════════════════════════════════════════════════════════
 //  CONFIGURAÇÃO
 // ════════════════════════════════════════════════════════════════════
-const API = 'http://localhost:3001';
+const API = (() => {
+  const { hostname } = window.location;
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:3001';
+  }
+  // Backend no Render — altere se usar outra URL
+  return 'https://oficinaos-backend.onrender.com';
+})();
 
 // ════════════════════════════════════════════════════════════════════
 //  LOCAL STORAGE  (Critério 5 do trabalho)

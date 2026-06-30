@@ -7,7 +7,16 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const DATA_FILE = path.join(__dirname, 'dados.json');
 
-app.use(cors());
+const ORIGENS_PERMITIDAS = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://127.0.0.1:5500',
+  'https://www.oficinaos.com',
+  'https://oficinaos.com',
+  'https://fayrossky.github.io'
+];
+
+app.use(cors({ origin: ORIGENS_PERMITIDAS }));
 app.use(express.json());
 
 // ─── Helpers ────────────────────────────────────────────────────────────────

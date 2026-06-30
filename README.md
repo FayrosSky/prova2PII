@@ -8,37 +8,79 @@
 
 ```
 oficina/
-├── backend/
-│   ├── server.js       ← Servidor Express (API REST)
-│   ├── dados.json      ← Banco de dados JSON
-│   └── package.json
-└── frontend/
-    ├── index.html      ← Página principal
-    ├── css/
-    │   └── style.css
-    └── js/
-        └── app.js
+├── index.html          ← Front-end (GitHub Pages — raiz /)
+├── css/style.css
+├── js/app.js
+├── CNAME               ← Domínio customizado (www.oficinaos.com)
+├── .nojekyll           ← Evita processamento Jekyll no GitHub Pages
+├── README.md
+└── backend/            ← API Express (Render ou local)
+    ├── server.js
+    ├── dados.json
+    └── package.json
 ```
 
 ---
 
-## 🚀 Como rodar
+## 🚀 Como rodar localmente
 
-### 1. Instalar dependências do backend
+### 1. Backend
 ```bash
 cd backend
 npm install
-```
-
-### 2. Iniciar o servidor
-```bash
 node server.js
-# Servidor rodando em http://localhost:3000
+# Servidor em http://localhost:3001
 ```
 
-### 3. Abrir o front-end
-Abra o arquivo `frontend/index.html` diretamente no navegador,
-ou use a extensão **Live Server** do VSCode.
+### 2. Front-end
+Abra `index.html` no navegador ou use Live Server.
+
+---
+
+## 🌐 Hospedagem
+
+| Parte | Onde | URL |
+|-------|------|-----|
+| **Front-end** | GitHub Pages (pasta `/` root) | https://www.oficinaos.com |
+| **Back-end** | Render | https://oficinaos-backend.onrender.com |
+
+### GitHub Pages (front-end)
+
+1. Repositório: `FayrosSky/prova2PII`
+2. **Settings → Pages**
+3. **Source:** Deploy from branch `master`
+4. **Folder:** `/ (root)`
+5. **Custom domain:** `www.oficinaos.com`
+6. Marque **Enforce HTTPS** após o DNS validar
+
+### DNS do domínio (corrigir erro InvalidDNSError)
+
+No painel do registrador do domínio `oficinaos.com`:
+
+**Subdomínio www (obrigatório para o CNAME do projeto):**
+
+| Tipo | Nome | Valor |
+|------|------|-------|
+| CNAME | `www` | `fayrossky.github.io` |
+
+**Domínio raiz (opcional, para `oficinaos.com` sem www):**
+
+| Tipo | Nome | Valor |
+|------|------|-------|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+
+> A propagação DNS pode levar de alguns minutos até 24 horas.  
+> O erro *"DNS check unsuccessful"* aparece enquanto o registro CNAME/A ainda não existir ou estiver incorreto no registrador.
+
+### Render (back-end)
+
+1. Crie um **Web Service** apontando para a pasta `backend/`
+2. **Build command:** `npm install`
+3. **Start command:** `node server.js`
+4. Atualize a URL em `js/app.js` se for diferente de `oficinaos-backend.onrender.com`
 
 ---
 
@@ -51,8 +93,6 @@ ou use a extensão **Live Server** do VSCode.
 | 3 | **Todos os métodos HTTP** | GET, POST, PUT, PATCH, DELETE em ambas as entidades |
 | 4 | **Critérios de ordenação no servidor** | Veículos: modelo/marca/ano/proprietário/placa; OS: data_entrada/status |
 | 5 | **Local Storage** | Tema dark/light, cache offline das entidades, última ordenação usada |
-| 6 | **Persistência** | `dados.json` — arquivo JSON persistido no servidor |
-| 7 | **Hospedagem** | Deploy no Render (backend) + GitHub Pages (frontend) |
 
 ---
 
@@ -61,21 +101,21 @@ ou use a extensão **Live Server** do VSCode.
 ### Veículos
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| GET    | `/veiculos?ordenar=modelo` | Listar (ordenado) |
-| GET    | `/veiculos/:id` | Buscar por ID |
-| POST   | `/veiculos` | Cadastrar |
-| PUT    | `/veiculos/:id` | Atualizar completo |
-| PATCH  | `/veiculos/:id` | Atualizar parcial |
+| GET | `/veiculos?ordenar=modelo` | Listar (ordenado) |
+| GET | `/veiculos/:id` | Buscar por ID |
+| POST | `/veiculos` | Cadastrar |
+| PUT | `/veiculos/:id` | Atualizar completo |
+| PATCH | `/veiculos/:id` | Atualizar parcial |
 | DELETE | `/veiculos/:id` | Remover |
 
 ### Ordens de Serviço
 | Método | Rota | Descrição |
 |--------|------|-----------|
-| GET    | `/ordens?ordenar=data_entrada` | Listar (ordenado) |
-| GET    | `/ordens/:id` | Buscar por ID |
-| POST   | `/ordens` | Abrir nova OS |
-| PUT    | `/ordens/:id` | Atualizar completo |
-| PATCH  | `/ordens/:id` | Atualizar status/campos |
+| GET | `/ordens?ordenar=data_entrada` | Listar (ordenado) |
+| GET | `/ordens/:id` | Buscar por ID |
+| POST | `/ordens` | Abrir nova OS |
+| PUT | `/ordens/:id` | Atualizar completo |
+| PATCH | `/ordens/:id` | Atualizar status/campos |
 | DELETE | `/ordens/:id` | Remover |
 
 ---
