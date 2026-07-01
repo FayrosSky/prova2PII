@@ -1,6 +1,6 @@
-// ════════════════════════════════════════════════════════════════════
+
 //  CONFIGURAÇÃO
-// ════════════════════════════════════════════════════════════════════
+
 const API = (() => {
   const { hostname } = window.location;
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
@@ -10,9 +10,9 @@ const API = (() => {
   return 'https://oficinaos-backend.onrender.com';
 })();
 
-// ════════════════════════════════════════════════════════════════════
+
 //  LOCAL STORAGE  (Critério 5 do trabalho)
-// ════════════════════════════════════════════════════════════════════
+
 const LS = {
   get: (k, def = null)    => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch { return def; } },
   set: (k, v)             => localStorage.setItem(k, JSON.stringify(v)),
@@ -29,9 +29,9 @@ const LS = {
   setTema: (t)            => LS.set('tema', t),
 };
 
-// ════════════════════════════════════════════════════════════════════
+
 //  TEMA  (Critério 5 - local storage)
-// ════════════════════════════════════════════════════════════════════
+
 function aplicarTema(tema) {
   document.documentElement.setAttribute('data-theme', tema);
   const btn = document.getElementById('btn-tema');
@@ -46,9 +46,9 @@ document.getElementById('btn-tema').addEventListener('click', () => {
 
 aplicarTema(LS.getTema());
 
-// ════════════════════════════════════════════════════════════════════
+
 //  ABAS
-// ════════════════════════════════════════════════════════════════════
+
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -61,9 +61,9 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-// ════════════════════════════════════════════════════════════════════
+
 //  TOAST
-// ════════════════════════════════════════════════════════════════════
+
 function toast(msg, tipo = 'success') {
   const el = document.createElement('div');
   el.className = `toast toast-${tipo}`;
@@ -72,9 +72,9 @@ function toast(msg, tipo = 'success') {
   setTimeout(() => el.remove(), 3500);
 }
 
-// ════════════════════════════════════════════════════════════════════
+
 //  API HELPER
-// ════════════════════════════════════════════════════════════════════
+
 async function api(method, endpoint, body = null) {
   const opts = {
     method,
@@ -87,9 +87,9 @@ async function api(method, endpoint, body = null) {
   return data;
 }
 
-// ════════════════════════════════════════════════════════════════════
+
 //  VALIDAÇÃO CLIENTE  (Critério 2 do trabalho)
-// ════════════════════════════════════════════════════════════════════
+
 function limparErros(form) {
   form.querySelectorAll('.erro').forEach(el => el.classList.remove('erro'));
   form.querySelectorAll('.msg-erro').forEach(el => el.remove());
@@ -150,9 +150,9 @@ function validarOS(form) {
   return ok;
 }
 
-// ════════════════════════════════════════════════════════════════════
+
 //  VEÍCULOS
-// ════════════════════════════════════════════════════════════════════
+
 let veiculosCache = [];
 
 async function carregarVeiculos() {
@@ -208,7 +208,7 @@ document.getElementById('sort-veiculos').addEventListener('change', e => {
   carregarVeiculos();
 });
 
-// ── Formulário cadastrar veículo ──────────────────────────────────
+// ── Formulário cadastrar veículo 
 document.getElementById('form-veiculo').addEventListener('submit', async e => {
   e.preventDefault();
   const form = e.target;
@@ -231,7 +231,7 @@ document.getElementById('form-veiculo').addEventListener('submit', async e => {
   }
 });
 
-// ── Modal editar veículo ──────────────────────────────────────────
+// ── Modal editar veículo 
 function abrirEditarVeiculo(id) {
   const v = veiculosCache.find(x => x.id === id);
   if (!v) return;
@@ -301,7 +301,7 @@ async function deletarVeiculo(id, placa) {
 
 // ════════════════════════════════════════════════════════════════════
 //  ORDENS DE SERVIÇO
-// ════════════════════════════════════════════════════════════════════
+
 let ordensCache = [];
 
 async function carregarOrdens() {
@@ -383,7 +383,7 @@ function popularSelectVeiculos() {
   });
 }
 
-// ── Formulário nova OS ────────────────────────────────────────────
+// ── Formulário nova OS 
 document.getElementById('form-os').addEventListener('submit', async e => {
   e.preventDefault();
   const form = e.target;
@@ -404,7 +404,7 @@ document.getElementById('form-os').addEventListener('submit', async e => {
   }
 });
 
-// ── Modal editar OS ───────────────────────────────────────────────
+// ── Modal editar OS 
 function abrirEditarOS(id) {
   const os = ordensCache.find(x => x.id === id);
   if (!os) return;
@@ -464,7 +464,7 @@ async function deletarOS(id) {
 
 // ════════════════════════════════════════════════════════════════════
 //  DASHBOARD
-// ════════════════════════════════════════════════════════════════════
+
 async function carregarDashboard() {
   try {
     const [veiculos, ordens] = await Promise.all([
@@ -501,7 +501,7 @@ async function carregarDashboard() {
 
 // ════════════════════════════════════════════════════════════════════
 //  INICIALIZAÇÃO
-// ════════════════════════════════════════════════════════════════════
+
 (async () => {
   await carregarVeiculos();
   carregarDashboard();

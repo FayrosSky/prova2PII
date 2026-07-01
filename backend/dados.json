@@ -9,11 +9,62 @@
       "proprietario": "João",
       "telefone": "11999999999",
       "criado_em": "2026-06-30T02:09:34.019Z"
+    },
+    {
+      "id": 3,
+      "placa": "ABX1234",
+      "modelo": "Strada",
+      "marca": "Fiat",
+      "ano": 2023,
+      "proprietario": "Pagé",
+      "telefone": "86999999999",
+      "criado_em": "2026-06-30T18:17:52.138Z"
+    },
+    {
+      "id": 5,
+      "placa": "ABC1234",
+      "modelo": "Strada",
+      "marca": "Fiat",
+      "ano": 2020,
+      "proprietario": "Pagé",
+      "telefone": "86999999999",
+      "criado_em": "2026-07-01T01:42:54.491Z"
     }
   ],
-  "ordens_servico": [],
+  "ordens_servico": [
+    {
+      "id": 2,
+      "veiculo_id": 1,
+      "descricao": "dkjhfaskdjf",
+      "mecanico": "Pagé",
+      "status": "em_andamento",
+      "valor": 1100000,
+      "data_entrada": "2026-06-30T18:18:29.165Z",
+      "data_saida": null
+    },
+    {
+      "id": 6,
+      "veiculo_id": 5,
+      "descricao": "tfytfyty",
+      "mecanico": "super choque",
+      "status": "concluida",
+      "valor": 1000,
+      "data_entrada": "2026-07-01T01:46:53.980Z",
+      "data_saida": "2026-07-01T01:47:55.694Z"
+    },
+    {
+      "id": 7,
+      "veiculo_id": 5,
+      "descricao": "fsdfsdf",
+      "mecanico": "super choque",
+      "status": "aberta",
+      "valor": 1999,
+      "data_entrada": "2026-07-01T01:48:13.120Z",
+      "data_saida": null
+    }
+  ],
   "_nextIds": {
-    "veiculos": 3,
-    "ordens_servico": 2
+    "veiculos": 6,
+    "ordens_servico": 8
   }
 }
